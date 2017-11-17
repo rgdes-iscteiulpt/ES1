@@ -13,10 +13,10 @@ public class FileReader {
 	public FileReader() {
 		fileRules = new File("rules.cf");
 		rules = new ArrayList<Rule>();
-		readFileRules();
+		readFileRules(fileRules);
 	}
 
-	public void readFileRules() {
+	public void readFileRules(File f) {
 		Rule rule;
 		try {
 			Scanner sc = new Scanner(fileRules);

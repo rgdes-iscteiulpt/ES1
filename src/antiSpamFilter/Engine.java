@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class Engine {
 
 	public Engine() {
-		Gui gui = new Gui();
+		new Gui();
 	}
 
 	public static void main(String[] args) {
-		Engine engine = new Engine();
+		new Engine();
 	}
 
 }
