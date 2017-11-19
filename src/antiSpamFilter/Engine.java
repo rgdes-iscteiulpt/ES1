@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Engine {
 
 	public Engine() {
-		new Gui();
+		new GUI();
 	}
 
 	public static void main(String[] args) {
