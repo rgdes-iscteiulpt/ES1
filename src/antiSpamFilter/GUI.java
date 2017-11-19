@@ -57,7 +57,7 @@ public class GUI {
 		buttonPanel.add(saveButton);
 
 		// Acrescentar os paineis à frame;
-		frame.add(buttonPanel, BorderLayout.SOUTH);
+		frame.add(buttonPanel, BorderLayout.EAST);
 		frame.add(scrollPanel);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
@@ -79,7 +79,14 @@ public class GUI {
 
 		}
 
-		table = new JTable(data, columns);
+		table = new JTable(data, columns) {
+
+			// Tabela não editável na coluna das regras;
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return column != 0;
+			};
+		};
 
 	}
 
