@@ -15,8 +15,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithmBuilder.GeneticAlgorithmVariant;
-
 public class GUI {
 
 	private JFrame frame;
@@ -62,8 +60,11 @@ public class GUI {
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				// A cada peso introduzido, introduz no arraylist de regras o
+				// peso correspondente a cada regra
+
 				int weight = 0;
-				// String s = "0";
 				for (int i = 0; i < r.getRules().size(); i++) {
 					String s = (String) table.getValueAt(i, 1);
 					if (s == null) {

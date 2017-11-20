@@ -28,8 +28,9 @@ public class Rule {
 		}
 		if (weight < -5) {
 			this.weight = -5;
+		} else {
+			this.weight = weight;
 		}
-		this.weight = weight;
 	}
 
 }
