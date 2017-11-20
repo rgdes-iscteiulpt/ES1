@@ -7,6 +7,7 @@ public class Rule {
 
 	public Rule(String name) {
 		this.name = name;
+		// Cada regra inicia com peso a 0;
 		weight = 0;
 	}
 
