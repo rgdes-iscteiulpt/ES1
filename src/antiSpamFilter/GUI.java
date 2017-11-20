@@ -63,7 +63,7 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int weight = 0;
-
+				// String s = "0";
 				for (int i = 0; i < r.getRules().size(); i++) {
 					String s = (String) table.getValueAt(i, 1);
 					if (s == null) {
