@@ -2,6 +2,8 @@ package antiSpamFilter;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -13,6 +15,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithmBuilder.GeneticAlgorithmVariant;
+
 public class GUI {
 
 	private JFrame frame;
@@ -23,12 +27,13 @@ public class GUI {
 	private JButton saveButton;
 
 	private FileReader r;
-	private ArrayList<Rule> rules;
+	// private ArrayList<Rule> rules;
+	private String[][] data;
 
 	public GUI() {
 		r = new FileReader();
-		this.rules = r.getRules();
-		createTable(rules);
+		// this.rules = r.getRules();
+		createTable(r.getRules());
 		init();
 
 	}
@@ -52,7 +57,26 @@ public class GUI {
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
 		resultButton = new JButton("	Result	 ");
+
 		saveButton = new JButton("	Save changes	");
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int weight = 0;
+				// String s = "0";
+				for (int i = 0; i < r.getRules().size(); i++) {
+					String s = (String) table.getValueAt(i, 1);
+					if (s == null) {
+						s = "0";
+					}
+					weight = Integer.parseInt(s);
+					System.out.println(s);
+					r.getRules().get(i).setWeight(weight);
+				}
+				checkWeights();
+			}
+		});
+
 		buttonPanel.add(resultButton);
 		buttonPanel.add(saveButton);
 
@@ -69,13 +93,13 @@ public class GUI {
 
 	public void createTable(ArrayList<Rule> rules) {
 		String[] columns = { "Rules", "Weights" };
-		String[][] data = new String[rules.size()][rules.size()];
+		data = new String[r.getRules().size()][r.getRules().size()];
 
 		for (int i = 0; i < rules.size(); i++) {
 
 			// Matriz data[Regras][Pesos]
 
-			data[i][0] = rules.get(i).getName();
+			data[i][0] = r.getRules().get(i).getName();
 
 		}
 
@@ -88,6 +112,13 @@ public class GUI {
 			};
 		};
 
+	}
+
+	public void checkWeights() {
+		for (int j = 0; j < r.getRules().size(); j++) {
+			System.out.println(r.getRules().get(j).getName() + " - " + r.getRules().get(j).getWeight());
+
+		}
 	}
 
 }

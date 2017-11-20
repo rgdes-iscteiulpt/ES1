@@ -7,6 +7,7 @@ public class Rule {
 
 	public Rule(String name) {
 		this.name = name;
+		weight = 0;
 	}
 
 	public String getName() {
@@ -22,6 +23,12 @@ public class Rule {
 	}
 
 	public void setWeight(int weight) {
+		if (weight > 5) {
+			this.weight = 5;
+		}
+		if (weight < -5) {
+			this.weight = -5;
+		}
 		this.weight = weight;
 	}
 
