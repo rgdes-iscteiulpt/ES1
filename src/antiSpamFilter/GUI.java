@@ -2,6 +2,7 @@ package antiSpamFilter;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -9,9 +10,11 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
@@ -22,6 +25,11 @@ public class GUI {
 	private JTable table;
 	private JPanel scrollPanel;
 	private JPanel buttonPanel;
+	private JPanel fpfnPanel;
+	private JLabel falsePositives;
+	private JTextField numberOfFalsePositives;
+	private JLabel falseNegatives;
+	private JTextField numberOfFalseNegatives;
 	private JButton resultButton;
 	private JButton saveButton;
 	private File fileSpam;
@@ -95,10 +103,32 @@ public class GUI {
 
 		buttonPanel.add(resultButton);
 		buttonPanel.add(saveButton);
-
+		
+		
+		// Painel dos falsos positivos e falsos negativos
+		fpfnPanel = new JPanel();
+		fpfnPanel.setLayout(new GridLayout(2,2));
+		
+		falsePositives = new JLabel("False Positives: ");
+		falsePositives.setHorizontalAlignment(JLabel.CENTER);
+		numberOfFalsePositives = new JTextField();
+		numberOfFalsePositives.setEditable(false);
+		
+		falseNegatives = new JLabel("False Negatives: ");
+		falseNegatives.setHorizontalAlignment(JLabel.CENTER);
+		numberOfFalseNegatives = new JTextField();
+		numberOfFalseNegatives.setEditable(false);
+		
+		fpfnPanel.add(falsePositives);
+		fpfnPanel.add(numberOfFalsePositives);
+		fpfnPanel.add(falseNegatives);
+		fpfnPanel.add(numberOfFalseNegatives);
+		
+		
 		// Acrescentar os paineis à frame;
 		frame.add(buttonPanel, BorderLayout.EAST);
 		frame.add(scrollPanel);
+		frame.add(fpfnPanel, BorderLayout.SOUTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
