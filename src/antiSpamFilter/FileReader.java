@@ -17,12 +17,6 @@ public class FileReader {
 		fileRules = new File("rules.cf");
 		rules = new ArrayList<Rule>();
 		readFileRules(fileRules);
-
-		fileSpam = new File("spam.log.txt");
-		readFileSpamHam(fileSpam);
-
-		fileHam = new File("ham.log.txt");
-		readFileSpamHam(fileHam);
 	}
 
 	public void readFileRules(File f) {
@@ -45,29 +39,40 @@ public class FileReader {
 		return rules;
 	}
 
-	public void readFileSpamHam(File filename) {
+	public void readFileSpamHam(File file) {
 		ArrayList<String> rulesEmail = new ArrayList<>();
-
+		int weights =0;
 		try {
-			Scanner sc = new Scanner(filename);
-
+			Scanner sc = new Scanner(file);
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] division = line.split("	");
+
 				String emailId = division[1];
 
+				//comparar rule do email com o array das rules e somar os pesos
 				for (int i = 1; i < division.length; i++) {
-					ruleEmail = division[i];
-
-					// confirmar se le as regras
-					rulesEmail.add(ruleEmail);
+					for(int j=0; j<rules.size(); j++) {
+						ruleEmail = division[i];
+						if(ruleEmail.equals(rules.get(j).getName())){
+							weights +=  rules.get(j).getWeight();
+						}
+					}		
+					System.out.println("w:" + weights);
 				}
-
-			}
+				weights=0;
+				
+			// confirmar se le as regras
+			rulesEmail.add(ruleEmail);
+		}
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		System.out.println("rulesEmail: " + rulesEmail);
 	}
+	
+
+	
 
 }

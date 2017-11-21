@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -23,6 +24,8 @@ public class GUI {
 	private JPanel buttonPanel;
 	private JButton resultButton;
 	private JButton saveButton;
+	private File fileSpam;
+	private File fileHam;
 
 	private FileReader r;
 	// private ArrayList<Rule> rules;
@@ -54,26 +57,38 @@ public class GUI {
 		// Acrescentar ao painel de botões os botões;
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
-		resultButton = new JButton("	Result	 ");
+		saveButton = new JButton("	Save changes  ");
 
-		saveButton = new JButton("	Save changes	");
-		saveButton.addActionListener(new ActionListener() {
+		resultButton = new JButton("	Result	");
+		resultButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				
 				// A cada peso introduzido, introduz no arraylist de regras o
 				// peso correspondente a cada regra
 
 				int weight = 0;
 				for (int i = 0; i < r.getRules().size(); i++) {
 					String s = (String) table.getValueAt(i, 1);
+					
 					if (s == null) {
 						s = "0";
 					}
+					
 					weight = Integer.parseInt(s);
-					System.out.println(s);
 					r.getRules().get(i).setWeight(weight);
+				
 				}
+				
+				//Ler ficheiros Spam.log e Ham.log
+				fileSpam = new File("spam.log.txt");
+				r.readFileSpamHam(fileSpam);
+				
+				fileHam = new File("ham.log.txt");
+				r.readFileSpamHam(fileHam);
+			
+				
+				//Verificar se o peso esta associado a respetiva regra
 				checkWeights();
 			}
 		});
