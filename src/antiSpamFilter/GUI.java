@@ -42,7 +42,6 @@ public class GUI {
 	private String[][] data;
 
 	
-	
 	public GUI() {
 		r = new FileReader();
 		// this.rules = r.getRules();

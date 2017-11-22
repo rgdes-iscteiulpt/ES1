@@ -66,8 +66,6 @@ public class FileReader {
 				}
 				
 				
-				
-				
 				// verificar se as mensagens são spam ou ham
 				if(weights > 5 && file.getName().equals("spam.log.txt")){
 					falsePositives++;
