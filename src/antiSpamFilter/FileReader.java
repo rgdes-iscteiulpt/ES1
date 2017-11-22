@@ -12,8 +12,8 @@ public class FileReader {
 	private File fileHam;
 	private ArrayList<Rule> rules;
 	private String ruleEmail;
-	private int falsePositives;
-	private int falseNegatives;
+	private int falsePositives=0;
+	private int falseNegatives=0;
 
 	public FileReader() {
 		fileRules = new File("rules.cf");
@@ -44,6 +44,8 @@ public class FileReader {
 	public void readFileSpamHam(File file) {
 		ArrayList<String> rulesEmail = new ArrayList<>();
 		int weights =0;
+//		falsePositives = 0;
+//		falseNegatives = 0;
 		try {
 			Scanner sc = new Scanner(file);
 			while (sc.hasNextLine()) {
@@ -59,13 +61,11 @@ public class FileReader {
 						if(ruleEmail.equals(rules.get(j).getName())){
 							weights +=  rules.get(j).getWeight();
 							
-							falsePositives = 0;
-							falseNegatives = 0;
-							
-							if(file.getName().equals(fileSpam) && weights > 5){
+							if(file.getName().equals("spam.log.txt") && weights > 5){
 								falsePositives++;
+								System.out.println(falsePositives + "POS");
 							}
-							else if(file.getName().equals(fileHam) && weights < 5){
+							else if(file.getName().equals("ham.log.txt") && weights <= 5){
 								falseNegatives++;
 							}
 						}

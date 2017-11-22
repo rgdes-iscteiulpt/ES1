@@ -28,8 +28,10 @@ public class GUI {
 	private JPanel fpfnPanel;
 	private JLabel falsePositives;
 	private JTextField numberOfFalsePositives;
+	private String p = null;
 	private JLabel falseNegatives;
 	private JTextField numberOfFalseNegatives;
+	private String n = null;
 	private JButton resultButton;
 	private JButton saveButton;
 	private File fileSpam;
@@ -98,6 +100,13 @@ public class GUI {
 				
 				//Verificar se o peso esta associado a respetiva regra
 				checkWeights();
+				
+				p = Integer.toString(r.getNumberOfFalsePositives());
+				numberOfFalsePositives.setText(p);
+				n = Integer.toString(r.getNumberOfFalseNegatives());
+				numberOfFalseNegatives.setText(n);
+				
+				
 			}
 		});
 
@@ -114,13 +123,15 @@ public class GUI {
 		falsePositives = new JLabel("False Positives: ");
 		falsePositives.setHorizontalAlignment(JLabel.CENTER);
 		numberOfFalsePositives = new JTextField();
-//		numberOfFalsePositives.add(r.getNumberOfFalsePositives());
+		p = Integer.toString(r.getNumberOfFalsePositives());
+		numberOfFalsePositives.setText(p);
 		numberOfFalsePositives.setEditable(false);
 		
 		falseNegatives = new JLabel("False Negatives: ");
 		falseNegatives.setHorizontalAlignment(JLabel.CENTER);
 		numberOfFalseNegatives = new JTextField();
-//		numberOfFalsePositives.add(r.getNumberOfFalseNegatives());
+		
+//		numberOfFalsePositives.setText(n);
 		numberOfFalseNegatives.setEditable(false);
 		
 		fpfnPanel.add(falsePositives);
