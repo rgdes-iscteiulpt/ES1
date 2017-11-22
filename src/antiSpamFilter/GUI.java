@@ -37,13 +37,13 @@ public class GUI {
 	private File fileSpam;
 	private File fileHam;
 
-	private FileReader r;
+	private FileManager r;
 	// private ArrayList<Rule> rules;
 	private String[][] data;
 
 	
 	public GUI() {
-		r = new FileReader();
+		r = new FileManager();
 		// this.rules = r.getRules();
 		createTable(r.getRules());
 		init();
@@ -69,7 +69,15 @@ public class GUI {
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
 		saveButton = new JButton("	Save changes  ");
-
+		
+		// Ao selecionaro Botao "Save changes" guardamos o resultado dos pesos que demos às regras ao ficheiros rules.cf	
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				r.writeRulesFile();				
+			}
+		});
+		
 		resultButton = new JButton("	Result	");
 		resultButton.addActionListener(new ActionListener() {
 			@Override
@@ -90,7 +98,7 @@ public class GUI {
 					r.getRules().get(i).setWeight(weight);
 				
 				}
-				
+
 				//Ler ficheiros Spam.log e Ham.log
 				fileSpam = new File("spam.log.txt");
 				r.readFileSpamHam(fileSpam);
@@ -100,7 +108,7 @@ public class GUI {
 			
 				
 				//Verificar se o peso esta associado a respetiva regra
-				checkWeights();
+//				checkWeights();
 				
 				p = Integer.toString(r.getNumberOfFalsePositives());
 				numberOfFalsePositives.setText(p);

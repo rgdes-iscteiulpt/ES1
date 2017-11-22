@@ -1,4 +1,4 @@
-Identificação da turma (ex: EIC1)
+METIA1
 
 Identificação do grupo (ex: Grupo 2)
 
