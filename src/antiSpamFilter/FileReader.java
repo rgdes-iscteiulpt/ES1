@@ -12,6 +12,8 @@ public class FileReader {
 	private File fileHam;
 	private ArrayList<Rule> rules;
 	private String ruleEmail;
+	private int falsePositives;
+	private int falseNegatives;
 
 	public FileReader() {
 		fileRules = new File("rules.cf");
@@ -56,11 +58,22 @@ public class FileReader {
 						ruleEmail = division[i];
 						if(ruleEmail.equals(rules.get(j).getName())){
 							weights +=  rules.get(j).getWeight();
+							
+							falsePositives = 0;
+							falseNegatives = 0;
+							
+							if(file.getName().equals(fileSpam) && weights > 5){
+								falsePositives++;
+							}
+							else if(file.getName().equals(fileHam) && weights < 5){
+								falseNegatives++;
+							}
 						}
 					}		
 					System.out.println("w:" + weights);
 				}
 				weights=0;
+				
 				
 			// confirmar se le as regras
 			rulesEmail.add(ruleEmail);
@@ -73,6 +86,13 @@ public class FileReader {
 	}
 	
 
+	public int getNumberOfFalsePositives(){
+		return falsePositives;
+	}
+	
+	public int getNumberOfFalseNegatives(){
+		return falseNegatives;
+	}
 	
 
 }

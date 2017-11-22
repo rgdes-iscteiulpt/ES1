@@ -112,11 +112,13 @@ public class GUI {
 		falsePositives = new JLabel("False Positives: ");
 		falsePositives.setHorizontalAlignment(JLabel.CENTER);
 		numberOfFalsePositives = new JTextField();
+//		numberOfFalsePositives.add(r.getNumberOfFalsePositives());
 		numberOfFalsePositives.setEditable(false);
 		
 		falseNegatives = new JLabel("False Negatives: ");
 		falseNegatives.setHorizontalAlignment(JLabel.CENTER);
 		numberOfFalseNegatives = new JTextField();
+//		numberOfFalsePositives.add(r.getNumberOfFalseNegatives());
 		numberOfFalseNegatives.setEditable(false);
 		
 		fpfnPanel.add(falsePositives);
