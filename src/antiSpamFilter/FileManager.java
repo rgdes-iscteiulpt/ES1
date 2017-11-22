@@ -31,13 +31,19 @@ public class FileManager {
 				String line = sc.nextLine();
 				
 				//se ficheiro tiver pesos das regras de avaliação anterior, apaga los
+				char last = line.charAt(line.length()-3);
 				char first = line.charAt(0);
 				String regra = first+"";
-				//já guardei a 1ª letra, começo pela segundo e ignoro as ultimas 4- " : 1" (exemplo se peso da regra for 1)
-				for (int i = 1; i < line.length()-4; i++) {
-					regra = regra.concat(line.charAt(i)+"");
-				}
-
+				
+					if(last == ':') {
+						//já guardei a 1ª letra, começo pela segundo e ignoro as ultimas 4- " : 1" (exemplo se peso da regra for 1)
+						for (int i = 1; i < line.length()-4; i++) {
+							regra = regra.concat(line.charAt(i)+"");
+						}
+					}
+					else
+						regra=line;
+					
 				rule = new Rule(regra);
 				rules.add(rule);
 			}
@@ -55,8 +61,8 @@ public class FileManager {
 	public void readFileSpamHam(File file) {
 		ArrayList<String> rulesEmail = new ArrayList<>();
 		int weights =0;
-//		falsePositives = 0;
-//		falseNegatives = 0;
+		falsePositives = 0;
+		falseNegatives = 0;
 		try {
 			Scanner sc = new Scanner(file);
 			while (sc.hasNextLine()) {
@@ -71,18 +77,19 @@ public class FileManager {
 						ruleEmail = division[i];
 						if(ruleEmail.equals(rules.get(j).getName())){
 							weights +=  rules.get(j).getWeight();
-							
-							if(file.getName().equals("spam.log.txt") && weights > 5){
-								falsePositives++;
-//								System.out.println(falsePositives + "POS");
-							}
-							else if(file.getName().equals("ham.log.txt") && weights <= 5){
-								falseNegatives++;
-							}
 						}
 					}		
-//					System.out.println("w:" + weights);
 				}
+				
+				// verificar se as mensagens são spam ou ham
+				if(weights > 5 && file.getName().equals("spam.log.txt")){
+					falsePositives++;
+				}
+				else if(weights <= 5 && file.getName().equals("ham.log.txt")){
+					falseNegatives++;
+				}
+				
+				System.out.println("w:" + weights);
 				weights=0;
 				
 				
