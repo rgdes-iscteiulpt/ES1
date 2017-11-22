@@ -105,6 +105,8 @@ public class GUI {
 		buttonPanel.add(saveButton);
 		
 		
+		
+		
 		// Painel dos falsos positivos e falsos negativos
 		fpfnPanel = new JPanel();
 		fpfnPanel.setLayout(new GridLayout(2,2));
