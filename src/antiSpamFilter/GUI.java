@@ -101,10 +101,10 @@ public class GUI {
 
 				//Ler ficheiros Spam.log e Ham.log
 				fileSpam = new File("spam.log.txt");
-				r.readFileSpamHam(fileSpam);
+				r.readFileSpam(fileSpam);
 				
 				fileHam = new File("ham.log.txt");
-				r.readFileSpamHam(fileHam);
+				r.readFileHam(fileHam);
 			
 				
 				//Verificar se o peso esta associado a respetiva regra
