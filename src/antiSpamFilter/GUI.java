@@ -41,6 +41,7 @@ public class GUI {
 	// private ArrayList<Rule> rules;
 	private String[][] data;
 
+	
 	public GUI() {
 		r = new FileReader();
 		// this.rules = r.getRules();
