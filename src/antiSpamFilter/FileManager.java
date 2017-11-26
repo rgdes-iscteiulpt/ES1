@@ -14,8 +14,8 @@ public class FileManager {
 	private File fileHam;
 	private ArrayList<Rule> rules;
 	private String ruleEmail;
-	private int falsePositives=0;
-	private int falseNegatives=0;
+	private int falsePositives;
+	private int falseNegatives;
 
 	public FileManager() {
 		fileRules = new File("rules.cf");

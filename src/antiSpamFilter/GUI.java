@@ -106,10 +106,7 @@ public class GUI {
 				fileHam = new File("ham.log.txt");
 				r.readFileHam(fileHam);
 			
-				
-				//Verificar se o peso esta associado a respetiva regra
-//				checkWeights();
-				
+				// Introduzir o número de falsos positivos e falsos negativos na janela
 				p = Integer.toString(r.getNumberOfFalsePositives());
 				numberOfFalsePositives.setText(p);
 				n = Integer.toString(r.getNumberOfFalseNegatives());
@@ -121,9 +118,7 @@ public class GUI {
 
 		buttonPanel.add(resultButton);
 		buttonPanel.add(saveButton);
-		
-		
-		
+			
 		
 		// Painel dos falsos positivos e falsos negativos
 		fpfnPanel = new JPanel();
