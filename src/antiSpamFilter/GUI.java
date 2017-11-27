@@ -23,17 +23,27 @@ public class GUI {
 
 	private JFrame frame;
 	private JTable table;
+	private JTable table1;
 	private JPanel scrollPanel;
-	private JPanel buttonPanel;
+	private JPanel scrollPanel2;
+	private JPanel buttonPanel1;
+	private JPanel buttonPanel2;
 	private JPanel fpfnPanel;
+	private JPanel fpfnPanel2;
 	private JLabel falsePositives;
+	private JLabel falsePositives2;
 	private JTextField numberOfFalsePositives;
+	private JTextField numberOfFalsePositives2;
 	private String p = null;
 	private JLabel falseNegatives;
+	private JLabel falseNegatives2;
 	private JTextField numberOfFalseNegatives;
+	private JTextField numberOfFalseNegatives2;
 	private String n = null;
 	private JButton resultButton;
+	private JButton resultButton2;
 	private JButton saveButton;
+	private JButton saveButton2;
 	private File fileSpam;
 	private File fileHam;
 
@@ -54,7 +64,7 @@ public class GUI {
 
 	public void init() {
 
-		frame = new JFrame("Anti-Spam Filter Manual");
+		frame = new JFrame("Anti-Spam Configuration For Professional Mail-Box");
 		frame.setLayout(new BorderLayout());
 
 		// Acrescentar o scroll à tabela
@@ -66,8 +76,8 @@ public class GUI {
 		scrollPanel.add(scroll);
 
 		// Acrescentar ao painel de botões os botões;
-		buttonPanel = new JPanel();
-		buttonPanel.setLayout(new FlowLayout());
+		buttonPanel1 = new JPanel();
+		buttonPanel1.setLayout(new FlowLayout());
 		saveButton = new JButton("	Save changes  ");
 		
 		// Ao selecionaro Botao "Save changes" guardamos o resultado dos pesos que demos às regras ao ficheiros rules.cf	
@@ -116,8 +126,8 @@ public class GUI {
 			}
 		});
 
-		buttonPanel.add(resultButton);
-		buttonPanel.add(saveButton);
+		buttonPanel1.add(resultButton);
+		buttonPanel1.add(saveButton);
 			
 		
 		// Painel dos falsos positivos e falsos negativos
@@ -141,7 +151,7 @@ public class GUI {
 		
 		
 		// Acrescentar os paineis à frame;
-		frame.add(buttonPanel, BorderLayout.EAST);
+		frame.add(buttonPanel1, BorderLayout.EAST);
 		frame.add(scrollPanel);
 		frame.add(fpfnPanel, BorderLayout.SOUTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -172,7 +182,13 @@ public class GUI {
 				return column != 0;
 			};
 		};
-
+		table1 = new JTable(data, columns) {
+			// Tabela não editável na coluna das regras;
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return column != 0;
+			};
+		};
 	}
 
 	public void checkWeights() {
