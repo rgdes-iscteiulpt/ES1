@@ -67,6 +67,20 @@ public class GUI {
 		frame = new JFrame("Anti-Spam Configuration For Professional Mail-Box");
 		frame.setLayout(new BorderLayout());
 
+		//1 painel para cada tipo de configuração
+		JPanel manual = new JPanel();
+		JPanel auto = new JPanel();
+				
+		manual.setLayout(new BorderLayout());
+		auto.setLayout(new BorderLayout());
+				
+		//títulos das configurações
+		JLabel m = new JLabel("Configuração Manual");
+		JLabel a = new JLabel("Configuração Automática");
+					
+		manual.add(m, BorderLayout.NORTH);
+		auto.add(a, BorderLayout.NORTH);
+
 		// Acrescentar o scroll à tabela
 		scrollPanel = new JPanel();
 		scrollPanel.setBorder(new TitledBorder(new EtchedBorder(), "Rules List"));
