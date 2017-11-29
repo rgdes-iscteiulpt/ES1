@@ -26,6 +26,8 @@ public class GUI {
 	private JTable table1;
 	private JPanel scrollPanel;
 	private JPanel scrollPanel2;
+	private JPanel b1;
+	private JPanel b2;
 	private JPanel buttonPanel1;
 	private JPanel buttonPanel2;
 	private JPanel fpfnPanel;
@@ -83,16 +85,40 @@ public class GUI {
 
 		// Acrescentar o scroll à tabela
 		scrollPanel = new JPanel();
+		scrollPanel2 = new JPanel();
+		
 		scrollPanel.setBorder(new TitledBorder(new EtchedBorder(), "Rules List"));
-
+		scrollPanel2.setBorder(new TitledBorder(new EtchedBorder(), "Rules List"));
+		
 		JScrollPane scroll = new JScrollPane(table);
-		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPanel.add(scroll);
+		JScrollPane scroll2 = new JScrollPane(table1);
 
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		scroll2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+		scrollPanel.add(scroll);
+		scrollPanel2.add(scroll2);
+
+
+		manual.add(scrollPanel, BorderLayout.CENTER);
+		auto.add(scrollPanel2, BorderLayout.CENTER);
+		
 		// Acrescentar ao painel de botões os botões;
+		b1 = new JPanel();
+		b2 = new JPanel();
+		
+		b1.setLayout(new BorderLayout());
+		b2.setLayout(new BorderLayout());
+		
 		buttonPanel1 = new JPanel();
-		buttonPanel1.setLayout(new FlowLayout());
+		buttonPanel2 = new JPanel();
+		
+		buttonPanel1.setLayout(new GridLayout(1, 2));
+		buttonPanel2.setLayout(new GridLayout(1, 2));
+		
 		saveButton = new JButton("	Save changes  ");
+		saveButton2 = new JButton("	Save changes  ");
 		
 		// Ao selecionaro Botao "Save changes" guardamos o resultado dos pesos que demos às regras ao ficheiros rules.cf	
 		saveButton.addActionListener(new ActionListener() {
@@ -103,6 +129,8 @@ public class GUI {
 		});
 		
 		resultButton = new JButton("	Result	");
+		resultButton2 = new JButton("	Result	");
+
 		resultButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -143,31 +171,59 @@ public class GUI {
 		buttonPanel1.add(resultButton);
 		buttonPanel1.add(saveButton);
 			
+		buttonPanel2.add(resultButton2);
+		buttonPanel2.add(saveButton2);
 		
 		// Painel dos falsos positivos e falsos negativos
 		fpfnPanel = new JPanel();
+		fpfnPanel2 = new JPanel();
+		
 		fpfnPanel.setLayout(new GridLayout(2,2));
+		fpfnPanel2.setLayout(new GridLayout(2,2));
 		
 		falsePositives = new JLabel("False Positives: ");
 		falsePositives.setHorizontalAlignment(JLabel.CENTER);
 		numberOfFalsePositives = new JTextField();
 		numberOfFalsePositives.setEditable(false);
 		
+		falsePositives2 = new JLabel("False Positives: ");
+		falsePositives2.setHorizontalAlignment(JLabel.CENTER);
+		numberOfFalsePositives2 = new JTextField();
+		numberOfFalsePositives2.setEditable(false);
+
 		falseNegatives = new JLabel("False Negatives: ");
 		falseNegatives.setHorizontalAlignment(JLabel.CENTER);
 		numberOfFalseNegatives = new JTextField();
 		numberOfFalseNegatives.setEditable(false);
 		
+		falseNegatives2 = new JLabel("False Negatives: ");
+		falseNegatives2.setHorizontalAlignment(JLabel.CENTER);
+		numberOfFalseNegatives2 = new JTextField();
+		numberOfFalseNegatives2.setEditable(false);
+
 		fpfnPanel.add(falsePositives);
 		fpfnPanel.add(numberOfFalsePositives);
 		fpfnPanel.add(falseNegatives);
 		fpfnPanel.add(numberOfFalseNegatives);
 		
+		fpfnPanel2.add(falsePositives2);
+		fpfnPanel2.add(numberOfFalsePositives2);
+		fpfnPanel2.add(falseNegatives2);
+		fpfnPanel2.add(numberOfFalseNegatives2);
 		
+		//Adicionais todos os botoes ao painel dos botoes
+		b1.add(buttonPanel1, BorderLayout.NORTH);
+		b1.add(fpfnPanel, BorderLayout.SOUTH);
+
+		b2.add(buttonPanel2, BorderLayout.NORTH);
+		b2.add(fpfnPanel2, BorderLayout.SOUTH);
+
+		manual.add(b1, BorderLayout.SOUTH);
+		auto.add(b2, BorderLayout.SOUTH);
+
 		// Acrescentar os paineis à frame;
-		frame.add(buttonPanel1, BorderLayout.EAST);
-		frame.add(scrollPanel);
-		frame.add(fpfnPanel, BorderLayout.SOUTH);
+		frame.add(manual, BorderLayout.WEST);
+		frame.add(auto, BorderLayout.EAST);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
