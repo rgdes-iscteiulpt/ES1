@@ -17,8 +17,8 @@ public class FileManager {
 	private int falsePositives;
 	private int falseNegatives;
 
-	public FileManager() {
-		fileRules = new File("rules.cf");
+	public FileManager(String filerulesname) {
+		fileRules = new File(filerulesname);
 		rules = new ArrayList<Rule>();
 		readFileRules(fileRules);
 	}
@@ -58,12 +58,13 @@ public class FileManager {
 		return rules;
 	}
 
-	public void readFileSpam(File file) {
+	public void readFileSpam(String filename) {
+		fileSpam = new File(filename);
 		ArrayList<String> rulesEmail = new ArrayList<>();
 		int weights =0;
 		falseNegatives = 0;
 		try {
-			Scanner sc = new Scanner(file);
+			Scanner sc = new Scanner(fileSpam);
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] division = line.split("	");
@@ -103,12 +104,13 @@ public class FileManager {
 	
 	
 	
-	public void readFileHam(File file) {
+	public void readFileHam(String filename) {
+		fileHam = new File(filename);
 		ArrayList<String> rulesEmail = new ArrayList<>();
 		int weights =0;
 		falsePositives = 0;
 		try {
-			Scanner sc = new Scanner(file);
+			Scanner sc = new Scanner(fileHam);
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] division = line.split("	");

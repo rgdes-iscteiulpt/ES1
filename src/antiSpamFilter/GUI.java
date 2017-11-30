@@ -1,11 +1,9 @@
 package antiSpamFilter;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -36,6 +34,9 @@ public class GUI {
 	private JLabel falsePositives2;
 	private JTextField numberOfFalsePositives;
 	private JTextField numberOfFalsePositives2;
+	private JTextField textrules;
+	private JTextField textspam;
+	private JTextField textham;
 	private String p = null;
 	private JLabel falseNegatives;
 	private JLabel falseNegatives2;
@@ -46,8 +47,7 @@ public class GUI {
 	private JButton resultButton2;
 	private JButton saveButton;
 	private JButton saveButton2;
-	private File fileSpam;
-	private File fileHam;
+
 
 	private FileManager r;
 	// private ArrayList<Rule> rules;
@@ -55,20 +55,63 @@ public class GUI {
 
 	
 	public GUI() {
-		r = new FileManager();
-		// this.rules = r.getRules();
-		createTable(r.getRules());
 		init();
-
 	}
 
 	// Cria a Janela de Regras/Pesos
-
 	public void init() {
-
 		frame = new JFrame("Anti-Spam Configuration For Professional Mail-Box");
 		frame.setLayout(new BorderLayout());
 
+		JPanel path = new JPanel();
+		path.setLayout(new BorderLayout());
+
+		JPanel esquerda = new JPanel();
+		esquerda.setLayout(new BorderLayout());
+
+		JLabel l1 = new JLabel("         Escolher Path:      ");
+		esquerda.add(l1);
+		
+		JPanel direita = new JPanel();
+		direita.setLayout(new GridLayout(6, 1));
+
+		JLabel l2 = new JLabel("		rules.cf		"); //rules.cf
+		JLabel l3 = new JLabel("		spam.log		"); //spam.log.txt
+		JLabel l4 = new JLabel("		ham.log			"); //ham.log.txt
+		
+		textrules = new JTextField();
+		textspam = new JTextField();
+		textham = new JTextField();
+
+		direita.add(l2);
+		direita.add(textrules);
+		direita.add(l3);
+		direita.add(textspam);
+		direita.add(l4);
+		direita.add(textham);
+		
+		JButton update = new JButton("		Get Rules		");
+		update.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				r = new FileManager(textrules.getText());
+				// this.rules = r.getRules();
+				createTable(r.getRules());
+				updateGUI();
+			}
+		});
+
+		path.add(update, BorderLayout.SOUTH); //só depois de darmos path para rules é que podes ler as rules e fazer o resto da gui
+		path.add(esquerda, BorderLayout.WEST);
+		path.add(direita, BorderLayout.EAST);
+		frame.add(path, BorderLayout.NORTH);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
+
+	public void updateGUI() {
 		//1 painel para cada tipo de configuração
 		JPanel manual = new JPanel();
 		JPanel auto = new JPanel();
@@ -152,11 +195,9 @@ public class GUI {
 				}
 
 				//Ler ficheiros Spam.log e Ham.log
-				fileSpam = new File("spam.log.txt");
-				r.readFileSpam(fileSpam);
+				r.readFileSpam(textspam.getText());
 				
-				fileHam = new File("ham.log.txt");
-				r.readFileHam(fileHam);
+				r.readFileHam(textham.getText());
 			
 				// Introduzir o número de falsos positivos e falsos negativos na janela
 				p = Integer.toString(r.getNumberOfFalsePositives());
@@ -229,7 +270,7 @@ public class GUI {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-
+	
 	// Cria a tabela correspondente a Janela
 
 	public void createTable(ArrayList<Rule> rules) {
