@@ -3,7 +3,7 @@ package antiSpamFilter;
 public class Rule {
 
 	private String name;
-	private int weight;
+	private double weight;
 
 	public Rule(String name) {
 		this.name = name;
@@ -18,11 +18,11 @@ public class Rule {
 		this.name = name;
 	}
 
-	public int getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(double weight) {
 		if (weight > 5) {
 			this.weight = 5;
 		}

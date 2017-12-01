@@ -14,8 +14,8 @@ public class FileManager {
 	private File fileHam;
 	private ArrayList<Rule> rules;
 	private String ruleEmail;
-	private int falsePositives;
-	private int falseNegatives;
+	private double falsePositives;
+	private double falseNegatives;
 
 	public FileManager(String filerulesname) {
 		fileRules = new File(filerulesname);
@@ -150,11 +150,11 @@ public class FileManager {
 	
 
 
-	public int getNumberOfFalsePositives(){
+	public double getNumberOfFalsePositives(){
 		return falsePositives;
 	}
 	
-	public int getNumberOfFalseNegatives(){
+	public double getNumberOfFalseNegatives(){
 		return falseNegatives;
 	}
 	

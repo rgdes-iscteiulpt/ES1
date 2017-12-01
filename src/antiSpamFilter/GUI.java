@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -52,8 +53,9 @@ public class GUI {
 	private FileManager r;
 	// private ArrayList<Rule> rules;
 	private String[][] data;
-
+	private String[][] data2;
 	
+
 	public GUI() {
 		init();
 	}
@@ -172,8 +174,6 @@ public class GUI {
 		});
 		
 		resultButton = new JButton("	Result	");
-		resultButton2 = new JButton("	Result	");
-
 		resultButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -200,10 +200,31 @@ public class GUI {
 				r.readFileHam(textham.getText());
 			
 				// Introduzir o número de falsos positivos e falsos negativos na janela
-				p = Integer.toString(r.getNumberOfFalsePositives());
+				p = Double.toString(r.getNumberOfFalsePositives());
 				numberOfFalsePositives.setText(p);
-				n = Integer.toString(r.getNumberOfFalseNegatives());
+				n = Double.toString(r.getNumberOfFalseNegatives());
 				numberOfFalseNegatives.setText(n);
+				
+				
+			}
+		});
+		
+		resultButton2 = new JButton("	Result	");
+		resultButton2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			
+				//Gerar configuração automática
+				AntiSpamFilterAutomaticConfiguration a = new AntiSpamFilterAutomaticConfiguration();
+				try {
+					a.automaticConfiguration();
+					
+					
+					
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				
 			}
@@ -276,12 +297,14 @@ public class GUI {
 	public void createTable(ArrayList<Rule> rules) {
 		String[] columns = { "Rules", "Weights" };
 		data = new String[r.getRules().size()][r.getRules().size()];
+		data2 = new String[r.getRules().size()][r.getRules().size()];
 
 		for (int i = 0; i < rules.size(); i++) {
 
 			// Matriz data[Regras][Pesos]
 
 			data[i][0] = r.getRules().get(i).getName();
+			data2[i][0] = r.getRules().get(i).getName();
 
 		}
 
