@@ -16,7 +16,10 @@ public class FileManager {
 	private String ruleEmail;
 	private double falsePositives;
 	private double falseNegatives;
-
+	private ArrayList<Double> fPositives;
+	private ArrayList<Double> fNegatives;
+	private ArrayList<String> problemList;
+	
 	public FileManager(String filerulesname) {
 		fileRules = new File(filerulesname);
 		rules = new ArrayList<Rule>();
@@ -102,8 +105,6 @@ public class FileManager {
 	}
 	
 	
-	
-	
 	public void readFileHam(String filename) {
 		fileHam = new File(filename);
 		ArrayList<String> rulesEmail = new ArrayList<>();
@@ -148,7 +149,47 @@ public class FileManager {
 	}
 	
 	
-
+	//Ler ficheiro com o nr de falsos positivos e falsos negativos calculados pelo algoritmo
+		public void readRf() {
+			 fPositives =  new ArrayList<>();
+			 fNegatives =  new ArrayList<>();
+			try {
+				File rf = new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rf");
+				Scanner sc = new Scanner(rf);
+				while (sc.hasNextLine()) {
+					String line = sc.nextLine();
+					String[] division = line.split(" ");	
+					String falsePositive= division[0];
+					String falseNegative = division[1];
+					Double fp = Double.parseDouble(falsePositive);
+					fPositives.add(fp);
+					Double fn = Double.parseDouble(falseNegative);
+					fNegatives.add(fn);
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			System.out.println("fP" + fPositives);
+			System.out.println("fn" + fNegatives);
+			
+		}
+		
+		
+		//Ler ficheiro com o pesos calculados pelo algoritmo com o pesos calculados
+		public void readRs() {
+			problemList= new ArrayList<>();
+			try {
+				File rs = new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs");
+				Scanner sc = new Scanner(rs);
+				while (sc.hasNextLine()) {
+					String line = sc.nextLine();
+					problemList.add(line);
+				}	
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		
 
 	public double getNumberOfFalsePositives(){
 		return falsePositives;

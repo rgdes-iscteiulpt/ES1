@@ -218,6 +218,9 @@ public class GUI {
 				AntiSpamFilterAutomaticConfiguration a = new AntiSpamFilterAutomaticConfiguration();
 				try {
 					a.automaticConfiguration();
+					//Ler ficheiros gerados pela configuração automática
+					r.readRf();
+					r.readRs();
 					
 					
 					
