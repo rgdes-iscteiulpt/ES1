@@ -188,7 +188,62 @@ public class FileManager {
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
+			getConfiguration();
 		}
+		
+		
+		public int getLine() {
+			double valueFp= -1;
+			double valueFn= -1;
+			int linha =0;
+			for(int i=0; i<fPositives.size(); i++) {
+				for (int j = 0; j < fNegatives.size(); j++) {
+					if(valueFp == -1 && valueFn==-1) {
+						valueFp =fPositives.get(0);
+						valueFn =fNegatives.get(0);
+						falsePositives = (int) valueFp;
+					}else if(valueFp>fPositives.get(i)){
+						valueFp =fPositives.get(i);
+						valueFn =fNegatives.get(i);
+						linha = i;
+						falsePositives = valueFp;
+						falseNegatives = valueFn;
+					}
+				}
+			}
+			System.out.println("vfp " + valueFp);
+			System.out.println("vfn " + valueFn);
+			return linha;		
+		}
+		
+		public ArrayList<Double> getConfiguration() {
+			ArrayList<Double> weights = new ArrayList<Double>();
+			double d=0;
+			String s = null;
+			int linha = getLine();
+			for (int i = 0; i < problemList.size(); i++) {
+				if(i== linha) {
+					s = problemList.get(i);
+					System.out.println("s" + s);
+					String[] division = s.split(" ");
+					for (int j = 0; j < division.length; j++) {
+						//System.out.println(division[j].toString());
+						d= Double.parseDouble(division[j]);
+						System.out.println("d" + d);
+						weights.add(d);
+						System.out.println("w" + weights);
+						rules.get(j).setWeight(d);
+					}
+				}
+			}
+		
+			return weights;
+		}
+		
+		
+		
+		
+		
 		
 
 	public double getNumberOfFalsePositives(){
