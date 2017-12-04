@@ -39,11 +39,13 @@ public class GUI {
 	private JTextField textspam;
 	private JTextField textham;
 	private String p = null;
+	private String pa = null;
 	private JLabel falseNegatives;
 	private JLabel falseNegatives2;
 	private JTextField numberOfFalseNegatives;
 	private JTextField numberOfFalseNegatives2;
 	private String n = null;
+	private String na = null;
 	private JButton resultButton;
 	private JButton resultButton2;
 	private JButton saveButton;
@@ -163,8 +165,6 @@ public class GUI {
 		buttonPanel2.setLayout(new GridLayout(1, 2));
 		
 		saveButton = new JButton("	Save changes  ");
-		saveButton2 = new JButton("	Save changes  ");
-		
 		// Ao selecionaro Botao "Save changes" guardamos o resultado dos pesos que demos às regras ao ficheiros rules.cf	
 		saveButton.addActionListener(new ActionListener() {
 			@Override
@@ -172,6 +172,17 @@ public class GUI {
 				r.writeRulesFile();				
 			}
 		});
+		
+		
+		saveButton2 = new JButton("	Save changes  ");
+		saveButton2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				r.writeRulesFile();				
+			}
+		});
+		
+		
 		
 		resultButton = new JButton("	Result	");
 		resultButton.addActionListener(new ActionListener() {
@@ -214,13 +225,26 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 			
-				//Gerar configuração automática
 				AntiSpamFilterAutomaticConfiguration a = new AntiSpamFilterAutomaticConfiguration();
 				try {
-					a.automaticConfiguration();
+					//Gerar configuração automática
+					a.automaticConfiguration(textrules.getText(), textspam.getText(), textham.getText());
+					
 					//Ler ficheiros gerados pela configuração automática
 					r.readRf();
 					r.readRs();
+					
+					//Introduzir configuração dos pesos na janela
+					for (int i = 0; i <r.getRules().size(); i++) {
+						data2[i][1]=Double.toString(r.getRules().get(i).getWeight());
+					}
+					
+					// Introduzir o número de falsos positivos e falsos negativos na janela
+					pa = Double.toString(r.getNumberOfFalsePositives());
+					numberOfFalsePositives2.setText(pa);
+					
+					na = Double.toString(r.getNumberOfFalseNegatives());
+					numberOfFalseNegatives2.setText(na);
 					
 					
 					
@@ -319,7 +343,7 @@ public class GUI {
 				return column != 0;
 			};
 		};
-		table1 = new JTable(data, columns) {
+		table1 = new JTable(data2, columns) {
 			// Tabela não editável na coluna das regras;
 			@Override
 			public boolean isCellEditable(int row, int column) {

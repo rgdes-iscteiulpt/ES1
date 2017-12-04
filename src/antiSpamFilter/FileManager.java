@@ -134,7 +134,7 @@ public class FileManager {
 				}
 				
 				
-				System.out.println("w:" + weights);
+				//System.out.println("w:" + weights);
 				weights=0;
 				
 				
@@ -191,7 +191,7 @@ public class FileManager {
 			getConfiguration();
 		}
 		
-		
+		//Obter linha com a melhor configuração de fp
 		public int getLine() {
 			double valueFp= -1;
 			double valueFn= -1;
@@ -216,6 +216,7 @@ public class FileManager {
 			return linha;		
 		}
 		
+		//Obter a configuração dos pesos correspondentes à linha obtida
 		public ArrayList<Double> getConfiguration() {
 			ArrayList<Double> weights = new ArrayList<Double>();
 			double d=0;
@@ -229,9 +230,9 @@ public class FileManager {
 					for (int j = 0; j < division.length; j++) {
 						//System.out.println(division[j].toString());
 						d= Double.parseDouble(division[j]);
-						System.out.println("d" + d);
+						//System.out.println("d" + d);
 						weights.add(d);
-						System.out.println("w" + weights);
+						//System.out.println("w" + weights);
 						rules.get(j).setWeight(d);
 					}
 				}
@@ -240,12 +241,6 @@ public class FileManager {
 			return weights;
 		}
 		
-		
-		
-		
-		
-		
-
 	public double getNumberOfFalsePositives(){
 		return falsePositives;
 	}

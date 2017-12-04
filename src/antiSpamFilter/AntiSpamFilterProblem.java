@@ -9,9 +9,18 @@ import org.uma.jmetal.solution.DoubleSolution;
 
 public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 	
-	  public AntiSpamFilterProblem() {
+	private String rulescf;
+	private String spam;
+	private String ham;
+	
+	
+	  public AntiSpamFilterProblem(String rulescf, String spam, String ham) {
+		  this(335);
+		  this.rulescf=rulescf;
+		  this.spam=spam;
+		  this.ham=ham;
 	    // 10 variables (anti-spam filter rules) by default 
-	    this(335);
+	  
 	  }
 
 	  public AntiSpamFilterProblem(Integer numberOfVariables) {
@@ -35,15 +44,15 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 	    double aux, xi, xj;
 	    double[] fx = new double[getNumberOfObjectives()];
 	    double[] x = new double[getNumberOfVariables()];
-	    FileManager fm = new FileManager("rules.cf");
-	    	    
+	    FileManager fm = new FileManager(rulescf);
+	    	
 	    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
 	      x[i] = solution.getVariableValue(i) ;
 	      fm.getRules().get(i).setWeight(x[i]);
 	    }
 
-	   fm.readFileHam("ham.log.txt");
-	   fm.readFileSpam("spam.log.txt");
+	   fm.readFileHam(ham);
+	   fm.readFileSpam(spam);
 	   
 	   
 	    solution.setObjective(0, fm.getNumberOfFalsePositives());
