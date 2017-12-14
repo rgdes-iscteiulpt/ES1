@@ -24,18 +24,20 @@ public class FileManager {
 	public ArrayList<Double> fPositives;
 	public ArrayList<Double> fNegatives;
 	public ArrayList<String> problemList;
-	
-	
+
+	/**
+	 * Default constructor
+	 * @param filerulesname
+	 */
 	public FileManager(String filerulesname) {
 		fileRules = new File(filerulesname);
 		rules = new ArrayList<Rule>();
 		readFileRules(fileRules);
 	}
-	
+
 	/**
-	 * Método que lê o ficheiro Rules
+	 * Método que lê o ficheiro f
 	 * @param f é o ficheiro a ser lido 
-	 * 
 	 */
 
 	public void readFileRules(File f) {
@@ -44,7 +46,7 @@ public class FileManager {
 			Scanner sc = new Scanner(fileRules);
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
-					
+
 				String[]partes = line.split(":");
 				rule = new Rule(partes[0]);
 				rules.add(rule);
@@ -57,16 +59,16 @@ public class FileManager {
 	}
 
 	/**
-	 * Método que vai buscar a lista de Rules
-	 * @return lista de Rules
+	 * Obtém a lista de Rules
+	 * @return ArrayList de rules
 	 */
-	
+
 	public ArrayList<Rule> getRules() {
 		return rules;
 	}
-	
+
 	/**
-	 * Método que lê o ficheiro spam.
+	 * Método que lê o ficheiro dado como parâmetro
 	 * Os pesos das regras do ficheiro são somados e é verificado se as mensagens são falsos negativos
 	 * @param filename é o ficheiro a ser lido
 	 */
@@ -93,28 +95,28 @@ public class FileManager {
 						}
 					}		
 				}
-				
-				// verificar se as mensagens são spam ou ham
+
 				if(weights <= 5){
 					falseNegatives++;
 				}				
 				weights=0;
-				
-			// confirmar se le as regras
-			rulesEmail.add(ruleEmail);
-		}
+
+				// confirmar se le as regras
+				rulesEmail.add(ruleEmail);
+			}
 			sc.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @param filename
+	 * Método que lê o ficheiro dado como parâmetro.
+	 * Os pesos das regras do ficheiro são somados e é verificado se as mensagens são falsos positivos
+	 * @param filename é o ficheiro a ser lido
 	 */
-	
+
 	public void readFileHam(String filename) {
 		fileHam = new File(filename);
 		ArrayList<String> rulesEmail = new ArrayList<>();
@@ -137,140 +139,139 @@ public class FileManager {
 						}
 					}		
 				}
-				
-				// verificar se as mensagens são spam ou ham
+
 				if(weights > 5){
 					falsePositives++;
 				}
 
 				weights=0;
-							
-			// confirmar se le as regras
-			rulesEmail.add(ruleEmail);
-		}
+
+				// confirmar se le as regras
+				rulesEmail.add(ruleEmail);
+			}
 			sc.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * 
+	 * Lê o ficheiro que contém o número de falsos positivos e falsos negativos calculados pelo algoritmo
 	 */
-	
-	//Ler ficheiro com o nr de falsos positivos e falsos negativos calculados pelo algoritmo
-		public void readRf() {
-			 fPositives =  new ArrayList<>();
-			 fNegatives =  new ArrayList<>();
-			try {
-				File rf = new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rf");
-				Scanner sc = new Scanner(rf);
-				while (sc.hasNextLine()) {
-					String line = sc.nextLine();
-					String[] division = line.split(" ");	
-					String falsePositive= division[0];
-					String falseNegative = division[1];
-					Double fp = Double.parseDouble(falsePositive);
-					fPositives.add(fp);
-					Double fn = Double.parseDouble(falseNegative);
-					fNegatives.add(fn);
-				}
-				sc.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+	public void readRf() {
+		fPositives =  new ArrayList<>();
+		fNegatives =  new ArrayList<>();
+		try {
+			File rf = new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rf");
+			Scanner sc = new Scanner(rf);
+			while (sc.hasNextLine()) {
+				String line = sc.nextLine();
+				String[] division = line.split(" ");	
+				String falsePositive= division[0];
+				String falseNegative = division[1];
+				Double fp = Double.parseDouble(falsePositive);
+				fPositives.add(fp);
+				Double fn = Double.parseDouble(falseNegative);
+				fNegatives.add(fn);
+			}
+			sc.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}	
+	}
+
+	/**
+	 * Lê ficheiro com os pesos calculados pelo algoritmo, adicionando todas as linhas do ficheiro a uma ArrayList
+	 */
+
+	public void readRs() {
+		problemList= new ArrayList<>();
+		try {
+			File rs = new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs");
+			Scanner sc = new Scanner(rs);
+			while (sc.hasNextLine()) {
+				String line = sc.nextLine();
+				problemList.add(line);
 			}	
-		}
-		
-		/**
-		 * 
-		 */
-		
-		//Ler ficheiro com o pesos calculados pelo algoritmo com o pesos calculados
-		public void readRs() {
-			problemList= new ArrayList<>();
-			try {
-				File rs = new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.NSGAII.rs");
-				Scanner sc = new Scanner(rs);
-				while (sc.hasNextLine()) {
-					String line = sc.nextLine();
-					problemList.add(line);
-				}	
-				sc.close();
-			} catch (FileNotFoundException e) {}
-			getConfiguration();
-		}
-		
-		/**
-		 * 
-		 * @return
-		 */
-		//Obter linha com a melhor configuração de fp
-		public int getLine() {
-			double valueFp= -1;
-			double valueFn= -1;
-			int linha =0;
-			for(int i=0; i<fPositives.size(); i++) {
-				for (int j = 0; j < fNegatives.size(); j++) {
-					if(valueFp == -1 && valueFn==-1) {
-						valueFp =fPositives.get(0);
-						valueFn =fNegatives.get(0);
-						falsePositives =  valueFp;
-						falseNegatives = valueFn;
-					}else if(valueFp>fPositives.get(i)){
-						valueFp =fPositives.get(i);
-						valueFn =fNegatives.get(i);
-						linha = i;
-						falsePositives = valueFp;
-						falseNegatives = valueFn;
-					}
+			sc.close();
+		} catch (FileNotFoundException e) {}
+		getConfiguration();
+	}
+
+	/**
+	 * Obtém a linha do ficheiro com melhor configuração de falsos positivos
+	 * @return linha de inteiros
+	 */
+
+	public int getLine() {
+		double valueFp= -1;
+		double valueFn= -1;
+		int linha =0;
+		for(int i=0; i<fPositives.size(); i++) {
+			for (int j = 0; j < fNegatives.size(); j++) {
+				if(valueFp == -1 && valueFn==-1) {
+					valueFp =fPositives.get(0);
+					valueFn =fNegatives.get(0);
+					falsePositives =  valueFp;
+					falseNegatives = valueFn;
+				}else if(valueFp>fPositives.get(i)){
+					valueFp =fPositives.get(i);
+					valueFn =fNegatives.get(i);
+					linha = i;
+					falsePositives = valueFp;
+					falseNegatives = valueFn;
 				}
 			}
-			return linha;		
 		}
-		
-		/**
-		 * 
-		 * @return
-		 */
-		//Obter a configuração dos pesos correspondentes à linha obtida
-		public ArrayList<Double> getConfiguration() {
-			ArrayList<Double> weights = new ArrayList<Double>();
-			double d=0;
-			String s = null;
-			int linha = getLine();
-			for (int i = 0; i < problemList.size(); i++) {
-				if(i== linha) {
-					s = problemList.get(i);
-					String[] division = s.split(" ");
-					for (int j = 0; j < division.length; j++) {
-						d= Double.parseDouble(division[j]);
-						weights.add(d);
-						rules.get(j).setWeight(d);
-					}
+		return linha;		
+	}
+
+	/**
+	 * Obtém a configuração dos pesos correspondentes à linha obtida
+	 * @return ArrayList de pesos
+	 */
+
+	public ArrayList<Double> getConfiguration() {
+		ArrayList<Double> weights = new ArrayList<Double>();
+		double d=0;
+		String s = null;
+		int linha = getLine();
+		for (int i = 0; i < problemList.size(); i++) {
+			if(i== linha) {
+				s = problemList.get(i);
+				String[] division = s.split(" ");
+				for (int j = 0; j < division.length; j++) {
+					d= Double.parseDouble(division[j]);
+					weights.add(d);
+					rules.get(j).setWeight(d);
 				}
 			}
-		
-			return weights;
 		}
-		
+
+		return weights;
+	}
+
+	/**
+	 * Obtém o número de falsos positivos
+	 * @return falsos positivos
+	 */
+
 	public double getNumberOfFalsePositives(){
 		return falsePositives;
 	}
-	
-	
+
 	/**
-	 * Método que devolve o número de falsos negativos
-	 * @return o número de falsos negativos
+	 * Obtém o número de falsos negativos
+	 * @return falsos negativos
 	 */
-	
+
 	public double getNumberOfFalseNegatives(){
 		return falseNegatives;
 	}
-	
-	/** Escreve um novo ficheiro de regras com o resultado dos pesos dado às regras do ficheiro rules.cf
-	 * 
+
+	/** Escreve um novo ficheiro de regras com os respetivos pesos atribuídos
 	 */
-	
+
 	public void writeRulesFile(){
 		if(fileRules.exists()) {
 			try {
