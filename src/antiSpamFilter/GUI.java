@@ -20,44 +20,58 @@ import javax.swing.border.TitledBorder;
 
 public class GUI {
 
-	private JFrame frame;
+	public JFrame frame = new JFrame("Anti-Spam Configuration For Professional Mail-Box");
 	private JTable table;
 	private JTable table1;
-	private JPanel scrollPanel;
-	private JPanel scrollPanel2;
-	private JPanel b1;
-	private JPanel b2;
-	private JPanel buttonPanel1;
-	private JPanel buttonPanel2;
-	private JPanel fpfnPanel;
-	private JPanel fpfnPanel2;
-	private JLabel falsePositives;
-	private JLabel falsePositives2;
-	private JTextField numberOfFalsePositives;
-	private JTextField numberOfFalsePositives2;
-	private JTextField textrules;
-	private JTextField textspam;
-	private JTextField textham;
+	private JPanel scrollPanel = new JPanel();
+	private JPanel scrollPanel2 = new JPanel();
+	private JPanel b1 = new JPanel();
+	private JPanel b2 =  new JPanel();;
+	private JPanel buttonPanel1 = new JPanel();
+	private JPanel buttonPanel2 = new JPanel();
+	private JPanel fpfnPanel = new JPanel();
+	private JPanel fpfnPanel2 = new JPanel();
+	public JLabel falsePositives = new JLabel("False Positives: ");
+	public JLabel falsePositives2 = new JLabel("False Positives: ");
+	private JTextField numberOfFalsePositives = new JTextField();
+	private JTextField numberOfFalsePositives2 = new JTextField();
+	private JTextField textrules = new JTextField();
+	private JTextField textspam = new JTextField();
+	private JTextField textham = new JTextField();
+	public JLabel l1 = new JLabel("         Escolher Path:      ");
+	public JLabel l2 = new JLabel("		rules.cf		"); //rules.cf
+	public JLabel l3 = new JLabel("		spam.log		"); //spam.log.txt
+	public JLabel l4 = new JLabel("		ham.log			"); //ham.log.txt
+	private JPanel manual = new JPanel();
+	private JPanel auto = new JPanel();
+	public JLabel m = new JLabel("Configuração Manual");
+	public JLabel a = new JLabel("Configuração Automática");
 	private String p = null;
 	private String pa = null;
-	private JLabel falseNegatives;
-	private JLabel falseNegatives2;
-	private JTextField numberOfFalseNegatives;
-	private JTextField numberOfFalseNegatives2;
+	public JLabel falseNegatives = new JLabel("False Negatives: ");
+	public JLabel falseNegatives2 = new JLabel("False Negatives: ");
+	private JTextField numberOfFalseNegatives = new JTextField();
+	private JTextField numberOfFalseNegatives2 = new JTextField();
 	private String n = null;
 	private String na = null;
-	private JButton resultButton;
-	private JButton resultButton2;
-	private JButton saveButton;
-	private JButton saveButton2;
-
-
+	public JButton resultButton = new JButton("	Result	");;
+	public JButton resultButton2 = new JButton("	Result	");
+	public JButton saveButton = new JButton("	Save changes  ");
+	public JButton saveButton2 = new JButton("	Save changes  ");
+	public JButton update = new JButton("		Get Rules		");
+	private JPanel path = new JPanel();
+	private JPanel esquerda = new JPanel();
+	private JPanel direita = new JPanel();
+	private boolean updateBoolean =false;
+	private boolean resultBoolean =false;
+	private boolean result2Boolean =false;
+	private boolean saveBoolean =false;
+	private boolean save2Boolean =false;
+	
 	private FileManager r;
-	// private ArrayList<Rule> rules;
 	private String[][] data;
 	private String[][] data2;
 	
-
 	public GUI() {
 		init();
 	}
@@ -67,25 +81,12 @@ public class GUI {
 		frame = new JFrame("Anti-Spam Configuration For Professional Mail-Box");
 		frame.setLayout(new BorderLayout());
 
-		JPanel path = new JPanel();
 		path.setLayout(new BorderLayout());
-
-		JPanel esquerda = new JPanel();
+		
 		esquerda.setLayout(new BorderLayout());
-
-		JLabel l1 = new JLabel("         Escolher Path:      ");
 		esquerda.add(l1);
 		
-		JPanel direita = new JPanel();
 		direita.setLayout(new GridLayout(6, 1));
-
-		JLabel l2 = new JLabel("		rules.cf		"); //rules.cf
-		JLabel l3 = new JLabel("		spam.log		"); //spam.log.txt
-		JLabel l4 = new JLabel("		ham.log			"); //ham.log.txt
-		
-		textrules = new JTextField();
-		textspam = new JTextField();
-		textham = new JTextField();
 
 		direita.add(l2);
 		direita.add(textrules);
@@ -94,14 +95,11 @@ public class GUI {
 		direita.add(l4);
 		direita.add(textham);
 		
-		JButton update = new JButton("		Get Rules		");
 		update.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				r = new FileManager(textrules.getText());
-				// this.rules = r.getRules();
-				createTable(r.getRules());
-				updateGUI();
+				contentUpdateButton();
+				updateBoolean=true;
 			}
 		});
 
@@ -117,23 +115,13 @@ public class GUI {
 
 	public void updateGUI() {
 		//1 painel para cada tipo de configuração
-		JPanel manual = new JPanel();
-		JPanel auto = new JPanel();
-				
 		manual.setLayout(new BorderLayout());
 		auto.setLayout(new BorderLayout());
-				
-		//títulos das configurações
-		JLabel m = new JLabel("Configuração Manual");
-		JLabel a = new JLabel("Configuração Automática");
-					
+									
 		manual.add(m, BorderLayout.NORTH);
 		auto.add(a, BorderLayout.NORTH);
 
-		// Acrescentar o scroll à tabela
-		scrollPanel = new JPanel();
-		scrollPanel2 = new JPanel();
-		
+		// Acrescentar o scroll à tabela	
 		scrollPanel.setBorder(new TitledBorder(new EtchedBorder(), "Rules List"));
 		scrollPanel2.setBorder(new TitledBorder(new EtchedBorder(), "Rules List"));
 		
@@ -141,154 +129,25 @@ public class GUI {
 		JScrollPane scroll2 = new JScrollPane(table1);
 
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		
 		scroll2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 		scrollPanel.add(scroll);
 		scrollPanel2.add(scroll2);
 
-
 		manual.add(scrollPanel, BorderLayout.CENTER);
 		auto.add(scrollPanel2, BorderLayout.CENTER);
 		
-		// Acrescentar ao painel de botões os botões;
-		b1 = new JPanel();
-		b2 = new JPanel();
-		
+		// Acrescentar ao painel de botões os botões;	
 		b1.setLayout(new BorderLayout());
 		b2.setLayout(new BorderLayout());
-		
-		buttonPanel1 = new JPanel();
-		buttonPanel2 = new JPanel();
 		
 		buttonPanel1.setLayout(new GridLayout(1, 2));
 		buttonPanel2.setLayout(new GridLayout(1, 2));
 		
-		saveButton = new JButton("	Save changes  ");
-		// Ao selecionaro Botao "Save changes" guardamos o resultado dos pesos que demos às regras ao ficheiros rules.cf	
-		saveButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				r.writeRulesFile();				
-			}
-		});
-		
-		
-		saveButton2 = new JButton("	Save changes  ");
-		saveButton2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				r.writeRulesFile();				
-			}
-		});
-		
-		
-		
-		resultButton = new JButton("	Result	");
-		resultButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				// A cada peso introduzido, introduz no arraylist de regras o
-				// peso correspondente a cada regra
-
-				int weight = 0;
-				for (int i = 0; i < r.getRules().size(); i++) {
-					String s = (String) table.getValueAt(i, 1);
-					
-					if (s == null) {
-						s = "0";
-					}
-					
-					weight = Integer.parseInt(s);
-					r.getRules().get(i).setWeight(weight);
-				
-				}
-
-				//Ler ficheiros Spam.log e Ham.log
-				r.readFileSpam(textspam.getText());
-				
-				r.readFileHam(textham.getText());
-			
-				// Introduzir o número de falsos positivos e falsos negativos na janela
-				p = Double.toString(r.getNumberOfFalsePositives());
-				numberOfFalsePositives.setText(p);
-				n = Double.toString(r.getNumberOfFalseNegatives());
-				numberOfFalseNegatives.setText(n);
-				
-				
-			}
-		});
-		
-		resultButton2 = new JButton("	Result	");
-		resultButton2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			
-				AntiSpamFilterAutomaticConfiguration a = new AntiSpamFilterAutomaticConfiguration();
-				try {
-					//Gerar configuração automática
-					a.automaticConfiguration(textrules.getText(), textspam.getText(), textham.getText());
-					
-					//Ler ficheiros gerados pela configuração automática
-					r.readRf();
-					r.readRs();
-					
-					//Introduzir configuração dos pesos na janela
-					for (int i = 0; i <r.getRules().size(); i++) {
-						data2[i][1]=Double.toString(r.getRules().get(i).getWeight());
-					}
-					
-					// Introduzir o número de falsos positivos e falsos negativos na janela
-					pa = Double.toString(r.getNumberOfFalsePositives());
-					numberOfFalsePositives2.setText(pa);
-					
-					na = Double.toString(r.getNumberOfFalseNegatives());
-					numberOfFalseNegatives2.setText(na);
-					
-					
-					
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				
-			}
-		});
-
-		buttonPanel1.add(resultButton);
-		buttonPanel1.add(saveButton);
-			
-		buttonPanel2.add(resultButton2);
-		buttonPanel2.add(saveButton2);
+		addButtons();
 		
 		// Painel dos falsos positivos e falsos negativos
-		fpfnPanel = new JPanel();
-		fpfnPanel2 = new JPanel();
-		
-		fpfnPanel.setLayout(new GridLayout(2,2));
-		fpfnPanel2.setLayout(new GridLayout(2,2));
-		
-		falsePositives = new JLabel("False Positives: ");
-		falsePositives.setHorizontalAlignment(JLabel.CENTER);
-		numberOfFalsePositives = new JTextField();
-		numberOfFalsePositives.setEditable(false);
-		
-		falsePositives2 = new JLabel("False Positives: ");
-		falsePositives2.setHorizontalAlignment(JLabel.CENTER);
-		numberOfFalsePositives2 = new JTextField();
-		numberOfFalsePositives2.setEditable(false);
-
-		falseNegatives = new JLabel("False Negatives: ");
-		falseNegatives.setHorizontalAlignment(JLabel.CENTER);
-		numberOfFalseNegatives = new JTextField();
-		numberOfFalseNegatives.setEditable(false);
-		
-		falseNegatives2 = new JLabel("False Negatives: ");
-		falseNegatives2.setHorizontalAlignment(JLabel.CENTER);
-		numberOfFalseNegatives2 = new JTextField();
-		numberOfFalseNegatives2.setEditable(false);
+		addFPanel();
 
 		fpfnPanel.add(falsePositives);
 		fpfnPanel.add(numberOfFalsePositives);
@@ -352,11 +211,157 @@ public class GUI {
 		};
 	}
 
-	public void checkWeights() {
-		for (int j = 0; j < r.getRules().size(); j++) {
-			System.out.println(r.getRules().get(j).getName() + " - " + r.getRules().get(j).getWeight());
+	//Executado no botao update - cria tabela com as regrs do ficheiro rules.cf 
+	public void contentUpdateButton() {
+		r = new FileManager(textrules.getText());
+		createTable(r.getRules());
+		updateGUI();
+	}
+	
+	//Executado no botao result
+	public void contentResultButton() {
+		// A cada peso introduzido, introduz no arraylist de regras o
+		// peso correspondente a cada regra
+		int weight = 0;
+		for (int i = 0; i < r.getRules().size(); i++) {
+			String s = (String) table.getValueAt(i, 1);
+			
+			if (s == null) {
+				s = "0";
+			}
+			weight = Integer.parseInt(s);
+			r.getRules().get(i).setWeight(weight);
+		
+		}
 
+		//Ler ficheiros Spam.log e Ham.log
+		r.readFileSpam(textspam.getText());
+		r.readFileHam(textham.getText());
+	
+		// Introduzir o número de falsos positivos e falsos negativos na janela
+		p = Double.toString(r.getNumberOfFalsePositives());
+		numberOfFalsePositives.setText(p);
+		n = Double.toString(r.getNumberOfFalseNegatives());
+		numberOfFalseNegatives.setText(n);
+	}
+	
+	//Executado no botao result2
+	public void contentResultButton2() {
+		AntiSpamFilterAutomaticConfiguration a = new AntiSpamFilterAutomaticConfiguration();
+		try {
+			//Gerar configuração automática
+			a.automaticConfiguration(textrules.getText(), textspam.getText(), textham.getText());
+			
+			//Ler ficheiros gerados pela configuração automática
+			r.readRf();
+			r.readRs();
+			
+			//Introduzir configuração dos pesos na janela
+			for (int i = 0; i <r.getRules().size(); i++) {
+				data2[i][1]=Double.toString(r.getRules().get(i).getWeight());
+			}
+			
+			// Introduzir o número de falsos positivos e falsos negativos na janela
+			pa = Double.toString(r.getNumberOfFalsePositives());
+			numberOfFalsePositives2.setText(pa);
+			
+			na = Double.toString(r.getNumberOfFalseNegatives());
+			numberOfFalseNegatives2.setText(na);
+			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	
+	public void addButtons() {
+		// Ao selecionaro Botao "Save changes" guardamos o resultado dos pesos que demos às regras ao ficheiros rules.cf	
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				r.writeRulesFile();
+				saveBoolean=true;
+				reset();
+			}
+		});
+		
+		
+		saveButton2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				r.writeRulesFile();	
+				save2Boolean=true;
+				reset();
+			}
+		});
+		
+		resultButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				contentResultButton();
+				resultBoolean=true;
+				reset();
+			}
+		});
+		
+		resultButton2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				contentResultButton2();
+				result2Boolean=true;
+				reset();
+			}
+		});
+
+		buttonPanel1.add(resultButton);
+		buttonPanel1.add(saveButton);
+			
+		buttonPanel2.add(resultButton2);
+		buttonPanel2.add(saveButton2);
+	}
+	
+	public void addFPanel() {
+		fpfnPanel.setLayout(new GridLayout(2,2));
+		fpfnPanel2.setLayout(new GridLayout(2,2));
+		
+		falsePositives.setHorizontalAlignment(JLabel.CENTER);
+		numberOfFalsePositives.setEditable(false);
+		
+		falsePositives2.setHorizontalAlignment(JLabel.CENTER);
+		numberOfFalsePositives2.setEditable(false);
+
+		falseNegatives.setHorizontalAlignment(JLabel.CENTER);
+		numberOfFalseNegatives.setEditable(false);
+		
+		falseNegatives2.setHorizontalAlignment(JLabel.CENTER);
+		numberOfFalseNegatives2.setEditable(false);
+	}
+	
+	
+	public void reset() {
+		if(updateBoolean == true && resultBoolean==true && result2Boolean==true && save2Boolean==true && saveBoolean==true) {
+			 r.getRules().clear();
+			 r.fPositives.clear();
+			 r.fNegatives.clear();
+			 r.problemList.clear();
+			 updateBoolean =false;
+			 resultBoolean =false;
+			 result2Boolean =false;
+			 saveBoolean =false;
+			 save2Boolean =false;
+			 
+			 for(int i =0; i< data.length; i++) {
+				 data[i][0]=null;
+				 data[i][1]=null;
+			 }
+				 
+			 for(int i =0; i< data2.length; i++) { 
+				 data2[i][0]=null;
+				 data2[i][1]=null;
+			 }
 		}
 	}
 
+	
 }

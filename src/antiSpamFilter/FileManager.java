@@ -16,9 +16,9 @@ public class FileManager {
 	private String ruleEmail;
 	private double falsePositives;
 	private double falseNegatives;
-	private ArrayList<Double> fPositives;
-	private ArrayList<Double> fNegatives;
-	private ArrayList<String> problemList;
+	public ArrayList<Double> fPositives;
+	public ArrayList<Double> fNegatives;
+	public ArrayList<String> problemList;
 	
 	public FileManager(String filerulesname) {
 		fileRules = new File(filerulesname);
@@ -32,25 +32,12 @@ public class FileManager {
 			Scanner sc = new Scanner(fileRules);
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
-				
-				//se ficheiro tiver pesos das regras de avaliação anterior, apaga los
-				char last = line.charAt(line.length()-3);
-				char first = line.charAt(0);
-				String regra = first+"";
-				
-					if(last == ':') {
-						//já guardei a 1ª letra, começo pela segundo e ignoro as ultimas 4- " : 1" (exemplo se peso da regra for 1)
-						for (int i = 1; i < line.length()-4; i++) {
-							regra = regra.concat(line.charAt(i)+"");
-						}
-					}
-					else
-						regra=line;
 					
-				rule = new Rule(regra);
+				String[]partes = line.split(":");
+				rule = new Rule(partes[0]);
 				rules.add(rule);
 			}
-
+			sc.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -90,18 +77,16 @@ public class FileManager {
 				}
 				
 				
-				System.out.println("w:" + weights);
+				//System.out.println("w:" + weights);
 				weights=0;
-				
 				
 			// confirmar se le as regras
 			rulesEmail.add(ruleEmail);
 		}
-			
+			sc.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-//		System.out.println("rulesEmail: " + rulesEmail);
 	}
 	
 	
@@ -132,20 +117,16 @@ public class FileManager {
 				if(weights > 5){
 					falsePositives++;
 				}
-				
-				
-				//System.out.println("w:" + weights);
+
 				weights=0;
-				
-				
+							
 			// confirmar se le as regras
 			rulesEmail.add(ruleEmail);
 		}
-			
+			sc.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-//		System.out.println("rulesEmail: " + rulesEmail);
 	}
 	
 	
@@ -166,12 +147,10 @@ public class FileManager {
 					Double fn = Double.parseDouble(falseNegative);
 					fNegatives.add(fn);
 				}
+				sc.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
-			}
-			System.out.println("fP" + fPositives);
-			System.out.println("fn" + fNegatives);
-			
+			}	
 		}
 		
 		
@@ -185,9 +164,8 @@ public class FileManager {
 					String line = sc.nextLine();
 					problemList.add(line);
 				}	
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
+				sc.close();
+			} catch (FileNotFoundException e) {}
 			getConfiguration();
 		}
 		
@@ -201,7 +179,8 @@ public class FileManager {
 					if(valueFp == -1 && valueFn==-1) {
 						valueFp =fPositives.get(0);
 						valueFn =fNegatives.get(0);
-						falsePositives = (int) valueFp;
+						falsePositives =  valueFp;
+						falseNegatives = valueFn;
 					}else if(valueFp>fPositives.get(i)){
 						valueFp =fPositives.get(i);
 						valueFn =fNegatives.get(i);
@@ -211,8 +190,6 @@ public class FileManager {
 					}
 				}
 			}
-			System.out.println("vfp " + valueFp);
-			System.out.println("vfn " + valueFn);
 			return linha;		
 		}
 		
@@ -225,14 +202,10 @@ public class FileManager {
 			for (int i = 0; i < problemList.size(); i++) {
 				if(i== linha) {
 					s = problemList.get(i);
-					System.out.println("s" + s);
 					String[] division = s.split(" ");
 					for (int j = 0; j < division.length; j++) {
-						//System.out.println(division[j].toString());
 						d= Double.parseDouble(division[j]);
-						//System.out.println("d" + d);
 						weights.add(d);
-						//System.out.println("w" + weights);
 						rules.get(j).setWeight(d);
 					}
 				}
@@ -256,7 +229,7 @@ public class FileManager {
 				fileRules.createNewFile();
 				PrintWriter pw = new PrintWriter(fileRules);
 				for (int i = 0; i < rules.size(); i++) {
-					pw.write(rules.get(i).getName() + " : " + rules.get(i).getWeight() + "\n");
+					pw.write(rules.get(i).getName() + ":" + rules.get(i).getWeight() + "\n");
 				}
 				pw.flush();
 				pw.close();
