@@ -7,6 +7,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * 
+ * Classe que trata da leitura e escrita de ficheiros
+ *
+ */
 public class FileManager {
 
 	private File fileRules;
@@ -20,11 +25,18 @@ public class FileManager {
 	public ArrayList<Double> fNegatives;
 	public ArrayList<String> problemList;
 	
+	
 	public FileManager(String filerulesname) {
 		fileRules = new File(filerulesname);
 		rules = new ArrayList<Rule>();
 		readFileRules(fileRules);
 	}
+	
+	/**
+	 * Método que lê o ficheiro Rules
+	 * @param f é o ficheiro a ser lido 
+	 * 
+	 */
 
 	public void readFileRules(File f) {
 		Rule rule;
@@ -44,9 +56,20 @@ public class FileManager {
 
 	}
 
+	/**
+	 * Método que vai buscar a lista de Rules
+	 * @return lista de Rules
+	 */
+	
 	public ArrayList<Rule> getRules() {
 		return rules;
 	}
+	
+	/**
+	 * Método que lê o ficheiro spam.
+	 * Os pesos das regras do ficheiro são somados e é verificado se as mensagens são falsos negativos
+	 * @param filename é o ficheiro a ser lido
+	 */
 
 	public void readFileSpam(String filename) {
 		fileSpam = new File(filename);
@@ -74,10 +97,7 @@ public class FileManager {
 				// verificar se as mensagens são spam ou ham
 				if(weights <= 5){
 					falseNegatives++;
-				}
-				
-				
-				//System.out.println("w:" + weights);
+				}				
 				weights=0;
 				
 			// confirmar se le as regras
@@ -89,6 +109,11 @@ public class FileManager {
 		}
 	}
 	
+	
+	/**
+	 * 
+	 * @param filename
+	 */
 	
 	public void readFileHam(String filename) {
 		fileHam = new File(filename);
@@ -129,6 +154,9 @@ public class FileManager {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	
 	//Ler ficheiro com o nr de falsos positivos e falsos negativos calculados pelo algoritmo
 		public void readRf() {
@@ -153,6 +181,9 @@ public class FileManager {
 			}	
 		}
 		
+		/**
+		 * 
+		 */
 		
 		//Ler ficheiro com o pesos calculados pelo algoritmo com o pesos calculados
 		public void readRs() {
@@ -169,6 +200,10 @@ public class FileManager {
 			getConfiguration();
 		}
 		
+		/**
+		 * 
+		 * @return
+		 */
 		//Obter linha com a melhor configuração de fp
 		public int getLine() {
 			double valueFp= -1;
@@ -193,6 +228,10 @@ public class FileManager {
 			return linha;		
 		}
 		
+		/**
+		 * 
+		 * @return
+		 */
 		//Obter a configuração dos pesos correspondentes à linha obtida
 		public ArrayList<Double> getConfiguration() {
 			ArrayList<Double> weights = new ArrayList<Double>();
@@ -218,11 +257,20 @@ public class FileManager {
 		return falsePositives;
 	}
 	
+	
+	/**
+	 * Método que devolve o número de falsos negativos
+	 * @return o número de falsos negativos
+	 */
+	
 	public double getNumberOfFalseNegatives(){
 		return falseNegatives;
 	}
 	
-	//Guardamos o resultado dos pesos que demos às regras ao ficheiros rules.cf	
+	/** Escreve um novo ficheiro de regras com o resultado dos pesos dado às regras do ficheiro rules.cf
+	 * 
+	 */
+	
 	public void writeRulesFile(){
 		if(fileRules.exists()) {
 			try {
