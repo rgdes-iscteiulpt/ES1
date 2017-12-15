@@ -48,7 +48,7 @@ public class FileManager {
 				String line = sc.nextLine();
 
 				String[]partes = line.split(":");
-				rule = new Rule(partes[0]);
+				rule = new Rule(partes[0].trim());
 				rules.add(rule);
 			}
 			sc.close();

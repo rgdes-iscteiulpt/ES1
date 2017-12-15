@@ -1,7 +1,6 @@
 package JUnitTest;
 
 import org.junit.jupiter.api.Test;
-
 import antiSpamFilter.Rule;
 
 class RuleTest {

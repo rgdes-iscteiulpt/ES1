@@ -1,6 +1,6 @@
 package JUnitTest;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import antiSpamFilter.Engine;
 import antiSpamFilter.GUI;

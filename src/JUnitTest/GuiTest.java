@@ -1,11 +1,11 @@
 package JUnitTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import antiSpamFilter.FileManager;
 import antiSpamFilter.GUI;
