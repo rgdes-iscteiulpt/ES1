@@ -20,10 +20,7 @@ import javax.swing.border.TitledBorder;
 
 /**
  * Classe da Interface Gráfica do Utilizador: Cria Frame e objectos associados à
- * mesma Introduz valores nas tabelas Rgras/Pesos
- */
-/**
- * @author hogum
+ * mesma; Introduz valores nas tabelas Regras/Pesos
  *
  */
 public class GUI {
