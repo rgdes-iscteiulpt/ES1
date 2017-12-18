@@ -1,0 +1,18 @@
+Sprint retrospective:
+
+1º Sprint 
+Fim: 27.nov
+
+- Parte manual completa, tanto GUI como implementação Java.
+- Adicionámos novas funcionalidades ao Product Backlog, tudo o que achámos que íamos precisar de fazer até ao fim do projeto.
+- Toda a equipa participou.
+- Demorámos 15-30min.
+
+2º Sprint
+Fim: 21.dez
+
+- Parte automática completa, tanto GUI como implementação Java.
+- Confirmámos que todos os items do Product Backlog estavam feitos.
+- Testámos as suas funcionalidades.
+- Toda a equipa participou.
+- Demorámos 15-30min.
