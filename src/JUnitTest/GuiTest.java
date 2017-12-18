@@ -5,11 +5,12 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import antiSpamFilter.FileManager;
 import antiSpamFilter.GUI;
 import antiSpamFilter.Rule;
+
 
 class GuiTest {
 
