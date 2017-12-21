@@ -1,9 +1,9 @@
 METIA1
 
-Identificação do grupo (ex: Grupo 2)
+Grupo 49
 
-Identificação do número, nome e papel de cada membro do grupo (ex: 12345, José Silva, Scrum Master)
+69300, Raquel Duque, Scrum Master; 64671, Hugo Gonzaga, Developer; 65029, In�s Jorge, Developer; 66077, Maria Pires, Quality Manager
 
-Identificação da variante do projeto desenvolvida (ex: AntiSpamConfigurationForProfessionalMailbox)
+AntiSpamConfigurationForProfessionalMailbox
 
-Link para um vídeo no youtube com a demonstração da aplicação final desenvolvida (ex: http://...)
+https://youtu.be/x9wbuXg4Bsw
