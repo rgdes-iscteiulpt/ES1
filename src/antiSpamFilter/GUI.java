@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -316,10 +317,14 @@ public class GUI {
 			na = Double.toString(r.getNumberOfFalseNegatives());
 			numberOfFalseNegatives2.setText(na);
 
+			createBoxPlot();
+
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-
+		// Gerar BoxPlot e Latex
+		createLatex();
+		System.out.println("ALL DONE");
 	}
 
 	/**
@@ -423,4 +428,42 @@ public class GUI {
 		}
 	}
 
+	public void createBoxPlot() {
+		System.out.println("Gerar BoxPlot...");
+
+		String[] params = new String[2];
+		String[] envp = new String[1];
+
+		params[0] = "C:\\Program Files\\R\\R-3.4.3\\bin\\x64\\Rscript.exe";
+		params[1] = "C:\\Users\\hogum\\git\\ES1-2017-METIA1-49\\experimentBaseDirectory\\AntiSpamStudy\\R\\HV.Boxplot.R";
+		envp[0] = "Path = C:\\Program Files\\R\\R-3.4.3\\bin\\x64";
+
+		try {
+			Process p = Runtime.getRuntime().exec(params, envp,
+					new File("C:\\Users\\hogum\\git\\ES1-2017-METIA1-49\\experimentBaseDirectory\\AntiSpamStudy\\R"));
+			System.out.println("Gerou Boxplot");
+		} catch (IOException e) {
+			System.out.println("Erro a gerar os gráficos R");
+		}
+
+	}
+
+	public void createLatex() {
+		System.out.println("Gerar Latex...");
+		String[] paramsLatex = new String[2];
+		String[] envpLatex = new String[1];
+
+		paramsLatex[0] = "C:\\Program Files\\MiKTeX 2.9\\miktex\\bin\\x64\\pdflatex.exe";
+		paramsLatex[1] = "C:\\Users\\hogum\\git\\ES1-2017-METIA1-49\\experimentBaseDirectory\\AntiSpamStudy\\latex\\AntiSpamStudy.tex";
+		envpLatex[0] = "Path = C:\\Program Files\\MiKTeX 2.9\\miktex\\bin\\x64";
+
+		try {
+			Process p = Runtime.getRuntime().exec(paramsLatex, envpLatex, new File(
+					"C:\\Users\\hogum\\git\\ES1-2017-METIA1-49\\experimentBaseDirectory\\AntiSpamStudy\\latex"));
+			System.out.println("Gerou Latex!!");
+
+		} catch (IOException e) {
+			System.out.println("Erro a gerar os gráficos latex");
+		}
+	}
 }
